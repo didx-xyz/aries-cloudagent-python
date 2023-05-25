@@ -322,6 +322,11 @@ class OutOfBandManager(BaseConnectionManager):
                     endpoint=my_endpoint,
                     routing_keys=routing_keys,
                 ).serialize()
+                # Add mapping for multitenant relaying.
+                # Mediation of public keys is not supported yet
+                await self._route_manager.route_public_did(
+                    self.profile, our_recipient_key
+                )
 
             routing_keys = [
                 key
