@@ -322,6 +322,10 @@ class OutOfBandManager(BaseConnectionManager):
                     endpoint=my_endpoint,
                     routing_keys=routing_keys,
                 ).serialize()
+                # Need to make sure the created key is routed by the base wallet
+                await self._route_manager.route_verkey(
+                    self.profile, connection_key.verkey
+                )
 
                 # Add mapping for multitenant relaying.
                 # Mediation of public keys is not supported yet
@@ -549,6 +553,11 @@ class OutOfBandManager(BaseConnectionManager):
                         endpoint=self.profile.settings.get("default_endpoint"),
                         routing_keys=[],
                     ).serialize()
+
+                    # Need to make sure the created key is routed by the base wallet
+                    await self._route_manager.route_verkey(
+                        self.profile, connection_key.verkey
+                    )
                     await oob_record.save(session)
 
             await self._process_request_attach(oob_record)
