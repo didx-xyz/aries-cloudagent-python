@@ -266,6 +266,7 @@ class BaseConnectionManager:
         resolver = self._profile.inject(DIDResolver)
         try:
             doc_dict: dict = await resolver.resolve(self._profile, did, service_accept)
+            self._logger.warning(doc_dict)
             doc: ResolvedDocument = pydid.deserialize_document(doc_dict, strict=True)
             self._logger.warning(doc)
         except ResolverError as error:
