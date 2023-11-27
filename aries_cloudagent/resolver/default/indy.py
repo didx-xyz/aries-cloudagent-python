@@ -180,6 +180,7 @@ class IndyDIDResolver(BaseDIDResolver):
             async with ledger:
                 recipient_key = await ledger.get_key_for_did(did)
                 endpoints: Optional[dict] = await ledger.get_all_endpoints_for_did(did)
+                LOGGER.warning(f"LEDGER: {recipient_key} and endpoint {endpoints}")
         except LedgerError as err:
             raise DIDNotFound(f"DID {did} could not be resolved") from err
 
