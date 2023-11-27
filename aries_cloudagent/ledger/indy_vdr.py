@@ -377,6 +377,7 @@ class IndyVdrLedger(BaseLedger):
         except VdrError as err:
             raise LedgerTransactionError("Ledger request error") from err
 
+        LOGGER.warning(f"REQUEST RESULT {request_result}")
         return request_result
 
     async def _create_schema_request(
