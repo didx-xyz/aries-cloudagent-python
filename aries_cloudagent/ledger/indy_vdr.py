@@ -629,6 +629,7 @@ class IndyVdrLedger(BaseLedger):
         nym = self.did_to_nym(did)
         public_info = await self.get_wallet_public_did()
         public_did = public_info.did if public_info else None
+        LOGGER.warning(f"all endpoints: nym: {nym} pub_info: {public_info} pub_did: {public_did}")
         try:
             attrib_req = ledger.build_get_attrib_request(
                 public_did, nym, "endpoint", None, None
