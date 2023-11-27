@@ -52,12 +52,14 @@ class DIDResolver:
             DID.validate(did)
         for resolver in await self._match_did_to_resolver(profile, did):
             try:
+                LOGGER.warning("Resolving DID %s with %s", did, resolver)
                 LOGGER.debug("Resolving DID %s with %s", did, resolver)
                 document = await resolver.resolve(
                     profile,
                     did,
                     service_accept,
                 )
+                LOGGER.warning(f"IN RESOLVER DOC: {document}")
                 return resolver, document
             except DIDNotFound:
                 LOGGER.debug("DID %s not found by resolver %s", did, resolver)
