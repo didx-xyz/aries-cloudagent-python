@@ -163,8 +163,10 @@ class BaseDIDResolver(ABC):
         if cache:
             async with cache.acquire(cache_key) as entry:
                 if entry.result:
+                    LOGGER.warning(f"CACHE has result {entry.result}")
                     return entry.result
                 else:
+                    LOGGER.warning(f"GOING to ELSE")
                     result = await self._resolve(profile, did, service_accept)
                     await entry.set_result(result, ttl=self.DEFAULT_TTL)
                     return result
