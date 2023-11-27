@@ -167,12 +167,13 @@ class IndyDIDResolver(BaseDIDResolver):
             ledger_exec_inst = IndyLedgerRequestsExecutor(profile)
         else:
             ledger_exec_inst = profile.inject(IndyLedgerRequestsExecutor)
-        ledger = (
-            await ledger_exec_inst.get_ledger_for_identifier(
+        
+        stuff =  await ledger_exec_inst.get_ledger_for_identifier(
                 did,
                 txn_record_type=GET_KEY_FOR_DID,
             )
-        )[1]
+        LOGGER.warning(f"STUFF FROM LEDGER {stuff}")
+        ledger = stuff[1]
         if not ledger:
             raise NoIndyLedger("No Indy ledger instance is configured.")
 
