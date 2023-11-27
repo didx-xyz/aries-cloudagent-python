@@ -161,6 +161,7 @@ class IndyDIDResolver(BaseDIDResolver):
         service_accept: Optional[Sequence[Text]] = None,
     ) -> dict:
         """Resolve an indy DID."""
+        LOGGER.warning("==INDY RESOLVER==")
         multitenant_mgr = profile.inject_or(BaseMultitenantManager)
         if multitenant_mgr:
             ledger_exec_inst = IndyLedgerRequestsExecutor(profile)
