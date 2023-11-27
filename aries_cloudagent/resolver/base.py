@@ -5,7 +5,7 @@ from enum import Enum
 import re
 from typing import NamedTuple, Optional, Pattern, Sequence, Text, Union
 import warnings
-
+import logging
 from pydid import DID
 
 from ..cache.base import BaseCache
@@ -13,6 +13,7 @@ from ..config.injection_context import InjectionContext
 from ..core.error import BaseError
 from ..core.profile import Profile
 
+LOGGER = logging.getLogger(__name__)
 
 class ResolverError(BaseError):
     """Base class for resolver exceptions."""
@@ -146,8 +147,11 @@ class BaseDIDResolver(ABC):
         """
         if isinstance(did, DID):
             did = str(did)
+            LOGGER.warning(f"IS instance {did}")
         else:
             DID.validate(did)
+            LOGGER.warning(f"VALIDATE: {did}")
+
         if not await self.supports(profile, did):
             raise DIDMethodNotSupported(
                 f"{self.__class__.__name__} does not support DID method for: {did}"
@@ -155,6 +159,7 @@ class BaseDIDResolver(ABC):
 
         cache_key = f"resolver::{type(self).__name__}::{did}"
         cache = profile.inject_or(BaseCache)
+        LOGGER.warning(f"KEYS {cache_key} {cache}")
         if cache:
             async with cache.acquire(cache_key) as entry:
                 if entry.result:
