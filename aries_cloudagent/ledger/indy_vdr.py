@@ -634,12 +634,13 @@ class IndyVdrLedger(BaseLedger):
             attrib_req = ledger.build_get_attrib_request(
                 public_did, nym, "endpoint", None, None
             )
+            LOGGER.warning(f"RESPONSE FROM LEDGER {attrib_req}")
         except VdrError as err:
             raise LedgerError("Exception when building attribute request") from err
 
         response = await self._submit(attrib_req, sign_did=public_info)
         data_json = response["data"]
-
+        LOGGER.warning(f"RESPONSE DATA: {data_json}")
         if data_json:
             endpoints = json.loads(data_json).get("endpoint", None)
         else:
