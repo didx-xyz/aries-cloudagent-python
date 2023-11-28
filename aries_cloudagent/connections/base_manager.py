@@ -836,7 +836,7 @@ class BaseConnectionManager:
                     "No corresponding DID found for recipient verkey: %s",
                     receipt.recipient_verkey,
                 )
-
+        self._logger.warning(f"RECEIPT: {receipt}")
         return await self.find_connection(
             receipt.sender_did, receipt.recipient_did, receipt.recipient_verkey, True
         )
