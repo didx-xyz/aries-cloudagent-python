@@ -241,6 +241,7 @@ class BaseConnectionManager:
         """
         async with self._profile.session() as session:
             storage: BaseStorage = session.inject(BaseStorage)
+            self._logger.warning(f"IN find did for key: record type: {self.RECORD_TYPE_DID_KEY}: and KEY :{key}")
             record = await storage.find_record(self.RECORD_TYPE_DID_KEY, {"key": key})
         return record.tags["did"]
 
