@@ -822,6 +822,7 @@ class BaseConnectionManager:
                         receipt.recipient_verkey
                     )
                 receipt.recipient_did = my_info.did
+                self._logger.warning(f"MY INFO FROM LOCAL DID FOR VERKEY: {my_info}")
                 if "posted" in my_info.metadata and my_info.metadata["posted"] is True:
                     receipt.recipient_did_public = True
             except InjectionError:
