@@ -804,6 +804,7 @@ class BaseConnectionManager:
         """
 
         if receipt.sender_verkey:
+            self._logger.warning(f"IN resolve inboud conn: sender_verkey: {receipt.sender_verkey}")
             try:
                 receipt.sender_did = await self.find_did_for_key(receipt.sender_verkey)
             except StorageNotFoundError:
