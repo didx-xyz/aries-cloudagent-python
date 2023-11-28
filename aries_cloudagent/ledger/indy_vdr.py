@@ -345,10 +345,13 @@ class IndyVdrLedger(BaseLedger):
         if sign is None or sign:
             if sign_did is sentinel:
                 sign_did = await self.get_wallet_public_did()
+                LOGGER.warning(f"Is sentinel sign_did: {sign_did}")
             if sign is None:
                 sign = bool(sign_did)
+                LOGGER.warning(f"Sign is NONE: now sign is : {sign}")
 
         if sign:
+            LOGGER.warning(f"IF sign: {sign}")
             if not sign_did:
                 raise BadLedgerRequestError("Cannot sign request without a public DID")
 
