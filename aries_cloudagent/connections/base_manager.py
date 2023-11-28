@@ -241,7 +241,7 @@ class BaseConnectionManager:
         """
         async with self._profile.session() as session:
             storage: BaseStorage = session.inject(BaseStorage)
-            self._logger.warning(f"IN find did for key: record type: {self.RECORD_TYPE_DID_KEY}: and KEY :{key}")
+            self._logger.warning(f"IN find did for key: record type: {self.RECORD_TYPE_DID_KEY}: and KEY: {key}")
             record = await storage.find_record(self.RECORD_TYPE_DID_KEY, {"key": key})
         return record.tags["did"]
 
@@ -756,7 +756,7 @@ class BaseConnectionManager:
         cache_key = None
         connection = None
         resolved = False
-
+        self._logger.warning(f"FIND inbound conn. Receipt: {receipt} and sender VERKEY: {receipt.sender_verkey} and sender DID: {receipt.sender_did}")
         if receipt.sender_verkey and receipt.recipient_verkey:
             cache_key = (
                 f"connection_by_verkey::{receipt.sender_verkey}"
