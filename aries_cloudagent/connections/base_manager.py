@@ -736,7 +736,7 @@ class BaseConnectionManager:
                     )
             except StorageError:
                 pass
-
+        self._logger.warning(f"IN FIND CONN... RETURNED CONN: {connection}")
         return connection
 
     async def find_inbound_connection(
