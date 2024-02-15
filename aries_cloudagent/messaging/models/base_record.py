@@ -349,6 +349,7 @@ class BaseRecord(BaseModel):
         try:
             self.updated_at = time_now()
             storage = session.inject(BaseStorage)
+            print("LOGGGING ====> ",storage)
             if self._id and not self._new_with_id:
                 record = self.storage_record
                 await storage.update_record(record, record.value, record.tags)
