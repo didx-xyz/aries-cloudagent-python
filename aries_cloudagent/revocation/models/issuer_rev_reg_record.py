@@ -247,9 +247,10 @@ class IssuerRevRegRecord(BaseRecord):
         self._revoc_reg_def.de.value.tails_location = tails_file_uri  # update ...
         self.revoc_reg_def = self._revoc_reg_def.de  # ... and pick up change via setter
         async with profile.session() as session:
+            print("SELF ====> ", self, self.deserialize())
             print("LOGGING ==> SESSION", session, session.settings , session.profile.name)
             await self.save(session, reason="Set tails file public URI")
-            print("LOGGING ==> SESSION after save", session, session.settings , session.profile.name)
+            print("LOGGING ===> SAVED", self, self.deserialize())
 
     async def send_def(
         self,
