@@ -352,6 +352,7 @@ class BaseRecord(BaseModel):
             print("LOGGGING ====> ",storage, self.EVENT_NAMESPACE, self)
             if self._id and not self._new_with_id:
                 record = self.storage_record
+                print("RECORD ===> ", record, record.value, record.tags)
                 await storage.update_record(record, record.value, record.tags)
                 new_record = False
             else:
