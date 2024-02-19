@@ -1306,7 +1306,7 @@ async def send_rev_reg_entry(request: web.BaseRequest):
     summary="Update revocation registry with new public URI to its tails file",
 )
 @match_info_schema(RevRegIdMatchInfoSchema())
-@request_schema(RevRegUpdateTailsFileUriSchema())
+# @request_schema(RevRegUpdateTailsFileUriSchema())
 @response_schema(RevRegResultSchema(), 200, description="")
 async def update_rev_reg(request: web.BaseRequest):
     """Request handler to update a rev reg's public tails URI by registry id.
