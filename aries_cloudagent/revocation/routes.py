@@ -1335,6 +1335,9 @@ async def update_rev_reg(request: web.BaseRequest):
     except RevocationError as err:
         raise web.HTTPBadRequest(reason=err.roll_up) from err
 
+    print("#199 RETURN PAYLOAD##########################################")
+    print("#199", rev_reg.serialize())
+    print("#199##########################################")
     return web.json_response({"result": rev_reg.serialize()})
 
 
