@@ -5,7 +5,7 @@ WORKDIR /src
 
 ADD . .
 
-RUN pip install --no-cache-dir poetry
+RUN pip install poetry
 RUN poetry build
 
 FROM python:${python_version}-slim-bullseye AS main
@@ -95,7 +95,7 @@ USER $user
 COPY --from=build /src/dist/aries_cloudagent*.whl .
 RUN aries_cloudagent_package=$(find ./ -name "aries_cloudagent*.whl" | head -n 1) && \
     echo "Installing ${aries_cloudagent_package} ..." && \
-    pip install --no-cache-dir --find-links=. ${aries_cloudagent_package}${acapy_reqs} && \
+    pip install --find-links=. ${aries_cloudagent_package}${acapy_reqs} && \
     rm aries_cloudagent*.whl && \
     chmod +rx $(python -m site --user-site) $HOME/.local
 

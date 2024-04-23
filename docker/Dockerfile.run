@@ -12,7 +12,7 @@ WORKDIR /usr/src/app
 # For consistency with base images, include curl for healthchecks
 RUN apt-get update && apt-get install -y curl && apt-get clean
 
-RUN pip install --no-cache-dir poetry
+RUN pip install poetry
 
 RUN mkdir -p aries_cloudagent && touch aries_cloudagent/__init__.py
 ADD pyproject.toml poetry.lock README.md ./
