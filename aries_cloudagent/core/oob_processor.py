@@ -93,6 +93,7 @@ class OobMessageProcessor:
 
                 LOGGER.warning("outbound_message")
                 LOGGER.warning(f"----- {outbound_message=} -----")
+                LOGGER.warning(f"----- {oob_record.our_service.serialize()=} -----")
                 LOGGER.warning(f"-----------")
 
                 their_service = oob_record.their_service
@@ -104,7 +105,7 @@ class OobMessageProcessor:
                         "Setting our service on the message ~service %s",
                         oob_record.our_service,
                     )
-                    message["~service"] = oob_record.our_service
+                    message["~service"] = oob_record.our_service.serialize()
 
                 message["~thread"] = {
                     **message.get("~thread", {}),
