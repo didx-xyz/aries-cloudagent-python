@@ -261,14 +261,7 @@ class OobMessageProcessor:
         LOGGER.warning(f"{oob_record.their_service=}")
         LOGGER.warning("____________________________")
 
-        their_service = (
-            cast(
-                ServiceDecorator,
-                ServiceDecorator.deserialize(oob_record.their_service),
-            )
-            if oob_record.their_service
-            else None
-        )
+        their_service = oob_record.their_service
 
         # Verify the sender key is present in their service in our record
         # If we don't have the sender verkey stored yet we can allow any key
