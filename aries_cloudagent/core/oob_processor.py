@@ -256,6 +256,11 @@ class OobMessageProcessor:
             )
             return None
 
+        LOGGER.warning("____________________________")
+        LOGGER.warning(f"{oob_record=}")
+        LOGGER.warning(f"{oob_record.their_service=}")
+        LOGGER.warning("____________________________")
+
         their_service = (
             cast(
                 ServiceDecorator,
