@@ -91,6 +91,10 @@ class OobMessageProcessor:
                     oob_record.their_service,
                 )
 
+                LOGGER.warning("outbound_message")
+                LOGGER.warning(f"----- {outbound_message=} -----")
+                LOGGER.warning(f"-----------")
+
                 their_service = oob_record.their_service
 
                 # Attach ~service decorator so other message can respond
