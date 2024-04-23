@@ -91,7 +91,7 @@ class OobMessageProcessor:
                     oob_record.their_service,
                 )
 
-                their_service = ServiceDecorator.deserialize(oob_record.their_service)
+                their_service = oob_record.their_service
 
                 # Attach ~service decorator so other message can respond
                 message = json.loads(outbound_message.payload)
