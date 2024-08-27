@@ -314,11 +314,13 @@ class IndyCredxHolder(IndyHolder):
                 raise IndyHolderError(f"Unknown presentation request referent: {reft}")
 
             tag_filter = {"$exist": [f"attr::{name}::value" for name in names]}
+            LOGGER.error("tag_filter before: %s", tag_filter)
             if restr:
                 # FIXME check if restr is a list or dict? validate WQL format
                 tag_filter = {"$and": [tag_filter] + restr}
             if extra_query:
                 tag_filter = {"$and": [tag_filter, extra_query]}
+            LOGGER.error("tag_filter after: %s", tag_filter)
 
             rows = self._profile.store.scan(
                 category=CATEGORY_CREDENTIAL,
