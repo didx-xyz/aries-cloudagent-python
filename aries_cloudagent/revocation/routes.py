@@ -581,6 +581,7 @@ async def revoke(request: web.BaseRequest):
     if create_transaction_for_endorser and rev_entry_resp:
         transaction_mgr = TransactionManager(profile)
         try:
+            LOGGER.error(">>> rev_entry_resp: %s  <<<", rev_entry_resp)
             transaction = await transaction_mgr.create_record(
                 messages_attach=rev_entry_resp["result"], connection_id=endorser_conn_id
             )
