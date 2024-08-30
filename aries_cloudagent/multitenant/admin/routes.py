@@ -30,8 +30,6 @@ from ...wallet.error import WalletSettingsError
 from ...wallet.models.wallet_record import WalletRecord, WalletRecordSchema
 from ..error import WalletKeyMissingError
 
-logger = logging.getLogger(__name__)
-
 ACAPY_LIFECYCLE_CONFIG_FLAG_MAP = {
     "ACAPY_AUTO_ACCEPT_INVITES": "debug.auto_accept_invites",
     "ACAPY_AUTO_ACCEPT_REQUESTS": "debug.auto_accept_requests",
@@ -388,9 +386,7 @@ async def wallets_list(request: web.BaseRequest):
     if wallet_name:
         query["wallet_name"] = wallet_name
 
-    logger.info(f">>> REQUEST QUERY DESCENDING: {request.query.get("descending")}")
     limit, offset, order_by, descending = get_paginated_query_params(request)
-    logger.info(f">>> PARSED DESCENDING VALUE: {descending}")
 
     try:
         async with profile.session() as session:
@@ -403,7 +399,6 @@ async def wallets_list(request: web.BaseRequest):
                 descending=descending,
             )
         results = [format_wallet_record(record) for record in records]
-        # results.sort(key=lambda w: w["created_at"])
     except (StorageError, BaseModelError) as err:
         raise web.HTTPBadRequest(reason=err.roll_up) from err
 
