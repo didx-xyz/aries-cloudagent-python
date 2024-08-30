@@ -1,6 +1,5 @@
 """Class for paginated query parameters."""
 
-import logging
 from typing import Tuple
 
 from aiohttp.web import BaseRequest
@@ -10,7 +9,6 @@ from marshmallow.validate import OneOf
 from ...messaging.models.openapi import OpenAPISchema
 from ...storage.base import DEFAULT_PAGE_SIZE, MAXIMUM_PAGE_SIZE
 
-logger = logging.getLogger(__name__)
 
 class PaginatedQuerySchema(OpenAPISchema):
     """Parameters for paginated queries."""
@@ -74,9 +72,7 @@ def get_paginated_query_params(request: BaseRequest) -> Tuple[int, int, str, boo
     order_by = request.query.get("order_by", "id")
 
     # Convert the 'descending' parameter to a boolean
-    logger.info(f">>> REQUEST QUERY DESCENDING: {request.query.get("descending")}")
     descending_str = request.query.get("descending", "False").lower()
     descending = descending_str in {"true", "1", "yes"}
-    logger.info(f">>> PARSED DESCENDING VALUE: {descending}")
 
     return limit, offset, order_by, descending
