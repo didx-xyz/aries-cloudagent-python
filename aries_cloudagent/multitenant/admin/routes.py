@@ -1,5 +1,6 @@
 """Multitenant admin routes."""
 
+import logging
 from aiohttp import web
 from aiohttp_apispec import (
     docs,
@@ -28,6 +29,8 @@ from ...utils.profiles import subwallet_type_not_same_as_base_wallet_raise_web_e
 from ...wallet.error import WalletSettingsError
 from ...wallet.models.wallet_record import WalletRecord, WalletRecordSchema
 from ..error import WalletKeyMissingError
+
+logger = logging.getLogger(__name__)
 
 ACAPY_LIFECYCLE_CONFIG_FLAG_MAP = {
     "ACAPY_AUTO_ACCEPT_INVITES": "debug.auto_accept_invites",
@@ -385,7 +388,9 @@ async def wallets_list(request: web.BaseRequest):
     if wallet_name:
         query["wallet_name"] = wallet_name
 
+    logger.info(f">>> REQUEST QUERY DESCENDING: {request.query.get("descending")}")
     limit, offset, order_by, descending = get_paginated_query_params(request)
+    logger.info(f">>> PARSED DESCENDING VALUE: {descending}")
 
     try:
         async with profile.session() as session:
@@ -489,7 +494,9 @@ async def wallet_create(request: web.BaseRequest):
     try:
         multitenant_mgr = context.profile.inject(BaseMultitenantManager)
 
-        wallet_record = await multitenant_mgr.create_wallet(settings, key_management_mode)
+        wallet_record = await multitenant_mgr.create_wallet(
+            settings, key_management_mode
+        )
 
         token = await multitenant_mgr.create_auth_token(wallet_record, wallet_key)
 
